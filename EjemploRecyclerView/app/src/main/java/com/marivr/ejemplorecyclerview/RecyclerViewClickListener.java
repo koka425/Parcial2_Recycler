@@ -13,7 +13,9 @@ import android.view.View;
 // TODO: 7.- Crear una interfaz con un evento onClick()
 public interface RecyclerViewClickListener {
 
-     void onClick(View v, int position);
+     void onClick(View v);
+
+
 
 
 }

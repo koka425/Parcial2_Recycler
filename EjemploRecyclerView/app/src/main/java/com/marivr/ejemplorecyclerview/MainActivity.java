@@ -6,9 +6,12 @@
 package com.marivr.ejemplorecyclerview;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -48,17 +51,15 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (!verificaConexion(this)) {
+            Toast.makeText(getBaseContext(),
+                    "Comprueba tu conexión a Internet e intenta mas tarde... ", Toast.LENGTH_SHORT)
+                    .show();
+            this.finish();
+        }
         setContentView(R.layout.activity_main);
 
-        Button btn = (Button) findViewById(R.id.button2);
-        btn.setOnClickListener(new View.OnClickListener() {
-
-           @Override
-           public void onClick(View v) {
-               Intent intent = new Intent(v.getContext(), ContactDtails.class);
-               startActivityForResult(intent, 0);
-           }
-        });
+    
        tvLat = (TextView) findViewById(textView);
         tvLon = (TextView) findViewById(R.id.textView2);
 
@@ -87,10 +88,11 @@ public class MainActivity extends AppCompatActivity implements
         // TODO: 13.- Ingresamos a nuestro adaptador un nuevo listener para poder saber el elemento al que se le dio click
         RecyclerViewCustomAdapter adapter = new RecyclerViewCustomAdapter(fotos, new RecyclerViewClickListener() {
             @Override
-            public void onClick(View view, int position) {
-
-                Toast.makeText(MainActivity.this, "Elemento " + position, Toast.LENGTH_SHORT).show();
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), ContactDtails.class);
+                startActivityForResult(intent, 0);
             }
+
 
 
         });
@@ -247,6 +249,22 @@ public class MainActivity extends AppCompatActivity implements
         this.location = location;
         Log.d("onLocationChanged", "cambió ubicación");
         updateLocationUI();
+    }
+
+    public static boolean verificaConexion(Context ctx) {
+        boolean bConectado = false;
+        ConnectivityManager connec = (ConnectivityManager) ctx
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo[] redes = connec.getAllNetworkInfo();
+
+        for (int i = 0; i < 2; i++) {
+
+            if (redes[i].getState() == NetworkInfo.State.CONNECTED) {
+                bConectado = true;
+            }
+        }
+        return bConectado;
     }
 
 

@@ -9,6 +9,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 
+import static android.support.v4.content.ContextCompat.startActivity;
+
 // TODO: 8.- Creamos una nueva clase que extienda un ViewHolder e implemente un onClickListener
 
 public class RowViewHolder
@@ -29,6 +31,8 @@ public class RowViewHolder
     public void onClick(View view) {
 
         // TODO: 10.- Cuando se de click el evento onClick de nuestra interfaz va a tomar la acción
-        listener.onClick(view, getAdapterPosition());
+
+        listener.onClick(view);
+
     }
 }

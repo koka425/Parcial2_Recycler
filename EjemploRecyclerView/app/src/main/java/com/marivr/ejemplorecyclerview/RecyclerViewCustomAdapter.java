@@ -5,6 +5,7 @@
  */
 package com.marivr.ejemplorecyclerview;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import static android.support.v4.app.ActivityCompat.startActivityForResult;
+import static android.support.v4.content.ContextCompat.startActivity;
 import static java.security.AccessController.getContext;
 
 
@@ -68,6 +71,9 @@ public class RecyclerViewCustomAdapter extends
     public CustomViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View vista = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.filacustom, parent, false);
+
+
+
 
         //CustomViewHolder customViewHolder = new CustomViewHolder(vista);
         //return customViewHolder;
